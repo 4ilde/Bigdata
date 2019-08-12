@@ -290,7 +290,10 @@
             </div>
 
             <div class="page-content">
-
+                <form name = "city_name_form" id = "city_name_form" >
+                    <input name = "city_name" id = "city_name" type="text" placeholder="请输入城市名称">
+                    <submit id="sure_btn">查询</submit>
+                </form>
                 <div id="container" style="min-width: 510px; height: 600px; max-width: 800px; margin: 0 auto"></div>
 
 
@@ -351,10 +354,66 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+    var chart
+    var dataI = [];
+    //chart setting
+    Highcharts.setOptions({
+        colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
+            return {
+                radialGradient: {
+                    cx: 0.5,
+                    cy: 0.3,
+                    r: 0.7
+                },
+                stops: [
+                    [0, color],
+                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                ]
+            };
+        })
+    });
+    // Build the chart
+    chart = new Highcharts.chart('container', {
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: 'Browser market shares in January, 2018'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    },
+                    connectorColor: 'silver'
+                }
+            }
+        },
+        series: [{
+            name: 'Share',
+            data: dataI
+        }]
+    });
+    //默认值
     $(function(){
         $.ajax({
             type: "POST",
             url:"/CityController/cityBusiness",
+            dataType:"json",
+            data:{
+                "city_name":"北京"
+            },
             success: function(msg){
                 var data = [];
                 for (i=0;i<msg.length;i++){
@@ -364,55 +423,32 @@
                     data.push(newData)
                 }
                 // Radialize the colors
-                Highcharts.setOptions({
-                    colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
-                        return {
-                            radialGradient: {
-                                cx: 0.5,
-                                cy: 0.3,
-                                r: 0.7
-                            },
-                            stops: [
-                                [0, color],
-                                [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-                            ]
-                        };
-                    })
-                });
+                chart.series[0].setData(data)
+            }
+        });
+    });
+    //从input获取传入后台查询
+    $("#sure_btn").click(function(){
+        var citys =$("#city_name").val()
+        $.ajax({
+            type: "POST",
+            url:"/CityController/cityBusiness",
+            dataType:"json",
+            data:{
+                "city_name":citys
+            },
+            success: function(msg){
+                var data = [];
+                for (i=0;i<msg.length;i++){
+                    var newData = {name: ' ',y: 11.84};
+                    newData.name = msg[i].airline_name;
+                    newData.y = msg[i].marketshare;
+                    data.push(newData)
 
-                // Build the chart
-                Highcharts.chart('container', {
-                    chart: {
-                        plotBackgroundColor: null,
-                        plotBorderWidth: null,
-                        plotShadow: false,
-                        type: 'pie'
-                    },
-                    title: {
-                        text: 'Browser market shares in January, 2018'
-                    },
-                    tooltip: {
-                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                    },
-                    plotOptions: {
-                        pie: {
-                            allowPointSelect: true,
-                            cursor: 'pointer',
-                            dataLabels: {
-                                enabled: true,
-                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                                style: {
-                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                },
-                                connectorColor: 'silver'
-                            }
-                        }
-                    },
-                    series: [{
-                        name: 'Share',
-                        data: data
-                    }]
-                });
+                }
+                // Radialize the colors
+                chart.series[0].setData(data)
+
             }
         });
     });
