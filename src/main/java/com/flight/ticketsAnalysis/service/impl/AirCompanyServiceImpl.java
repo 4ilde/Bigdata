@@ -15,11 +15,13 @@ public class AirCompanyServiceImpl implements AirCompanyService {
     @Autowired
     private AirCompanyMapper airCompanyMapper;
 
+    //查询各城市的航空公司市场占比
     @Override
     public List<AirlineCityEntity> queryCompanyRateInCity(String company_name){
         return airCompanyMapper.selectCompanyRateInCity(company_name);
     }
 
+    //查询所有航空公司
     @Override
     public List<AirlineEntity> queryAirCompany(){
         return airCompanyMapper.selectAircompany();

@@ -7,6 +7,7 @@ import com.flight.ticketsAnalysis.service.AirCompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class AirCompanyController {
     //查询航空公司在各个城市的业务占比
     @RequestMapping("companyRateInCity")
     @ResponseBody
-    public Object queryCompanyRateInCity(String company_name){
+    public Object queryCompanyRateInCity(@RequestParam(value="company_name")String company_name){
         List<AirlineCityEntity> list = airCompanyService.queryCompanyRateInCity(company_name);
         return list;
     }
