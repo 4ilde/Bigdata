@@ -1,10 +1,7 @@
 package com.flight.ticketsAnalysis.service.impl;
 
 import com.flight.ticketsAnalysis.dao.CityMapper;
-import com.flight.ticketsAnalysis.entity.AirlineCityEntity;
-import com.flight.ticketsAnalysis.entity.CityRankEntity;
-import com.flight.ticketsAnalysis.entity.FlightRankEntity;
-import com.flight.ticketsAnalysis.entity.ThroughputDayEntity;
+import com.flight.ticketsAnalysis.entity.*;
 import com.flight.ticketsAnalysis.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +13,20 @@ public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityMapper cityMapper;
+
+    //主页城市平均吞吐量显示
+    @Override
+    public List<ThroughputAveEntity> queryCityAverageThroughput()
+    {
+        return cityMapper.selectCityAverageThroughput();
+    }
+
+    //查询城市吞吐量
+    @Override
+    public List<ThroughputDayEntity> queryCityDayThroughput(String city_name)
+    {
+        return cityMapper.selectCityThroughput(city_name);
+    }
 
     //查询热门城市排行
     @Override
@@ -35,11 +46,6 @@ public class CityServiceImpl implements CityService {
         return cityMapper.selectFlightRank();
     }
 
-    //查询城市吞吐量
-    @Override
-    public List<ThroughputDayEntity> queryCityDayThroughput(String city_name)
-    {
-        return cityMapper.selectCityThroughput(city_name);
-    }
+
 
 }

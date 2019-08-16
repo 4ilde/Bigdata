@@ -433,8 +433,6 @@
     $("#sure_btn").click(function(){
         var departure_name =$("#departure_name").val()
         var landing_name =$("#landing_name").val()
-        console.log(departure_name);
-        console.log(landing_name);
         $.ajax({
             type: "POST",
             url:"/AirlineController/companyRateInAirline",

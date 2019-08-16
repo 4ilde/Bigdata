@@ -1,10 +1,7 @@
 package com.flight.ticketsAnalysis.controller;
 
 
-import com.flight.ticketsAnalysis.entity.AirlineCityEntity;
-import com.flight.ticketsAnalysis.entity.CityRankEntity;
-import com.flight.ticketsAnalysis.entity.FlightRankEntity;
-import com.flight.ticketsAnalysis.entity.ThroughputDayEntity;
+import com.flight.ticketsAnalysis.entity.*;
 import com.flight.ticketsAnalysis.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +18,22 @@ public class CityController {
 
     @Autowired
     private CityService cityService;
+
+    //主页城市平均吞吐量显示
+    @RequestMapping("indexCityThroughput")
+    @ResponseBody
+    public Object queryCityAverageThroughput(){
+        List<ThroughputAveEntity> list = cityService.queryCityAverageThroughput();
+        return list;
+    }
+
+    //城市的日吞吐量
+    @RequestMapping("cityThroughput")
+    @ResponseBody
+    public Object queryCityThroughput(@RequestBody String city_name){
+        List<ThroughputDayEntity> list = cityService.queryCityDayThroughput(city_name);
+        return list;
+    }
 
     //热门城市排行
     @RequestMapping("cityRank")
@@ -46,12 +59,6 @@ public class CityController {
         return list;
     }
 
-    //城市的吞吐量
-    @RequestMapping("cityThroughput")
-    @ResponseBody
-    public Object queryCityThroughput(@RequestBody String city_name){
-        List<ThroughputDayEntity> list = cityService.queryCityDayThroughput(city_name);
-        return list;
-    }
+
 
 }

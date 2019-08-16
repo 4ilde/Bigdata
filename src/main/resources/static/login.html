@@ -10,6 +10,7 @@
 
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/bootstrapValidator.min.css" />
     <link rel="stylesheet" href="assets/font-awesome/4.5.0/css/font-awesome.min.css" />
 
     <!-- text fonts -->
@@ -62,18 +63,18 @@
 
                                     <div class="space-6"></div>
 
-                                    <form action="@{LoginController/login}" method="post">
+                                    <form id="loginForm" method="post">
                                         <fieldset>
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input name="username" type="text" class="form-control" placeholder="账号" />
+															<input id="login_username" name="username" type="text" class="form-control" placeholder="账号" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                                             </label>
 
                                             <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input name="password" type="password" class="form-control" placeholder="密码" />
+															<input id="login_password" name="password" type="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                                             </label>
@@ -86,7 +87,7 @@
                                                     <span class="lbl"> 记住密码</span>
                                                 </label>
 
-                                                <button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+                                                <button id="login_btn" type="button" class="width-35 pull-right btn btn-sm btn-primary">
                                                     <i class="ace-icon fa fa-key"></i>
                                                     <span class="bigger-110">登录</span>
                                                 </button>
@@ -272,6 +273,8 @@
     if('ontouchstart' in document.documentElement) document.write("<script src='assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
 </script>
 
+<script src="assets/js/bootstrapValidator.min.js"></script>
+
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
     jQuery(function($) {
@@ -282,8 +285,6 @@
             $(target).addClass('visible');//show target
         });
     });
-
-
 
     //you don't need this, just used for changing background
     jQuery(function($) {
@@ -310,6 +311,80 @@
         });
 
     });
+
+
+
+    document.getElementById('login_btn').onclick= function () {
+        $('#loginForm').bootstrapValidator({
+            message: 'This value is not valid',
+            fields: {
+                username: {
+                    message: '用户名验证失败',
+                    validators: {
+                        notEmpty: {
+                            message: '用户名不能为空！'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 20,
+                            message: '用户名长度必须在6到20位之间'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '用户名只能包含大写、小写、数字和下划线'
+                        }
+                    }
+                },
+                password: {
+                    message: '密码验证失败',
+                    validators:{
+                        notEmpty: {
+                            message: '用户名不能为空！'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 20,
+                            message: '密码长度必须在6到16位之间'
+                        },
+                        regexp: {
+                            regexp: /^[a-zA-Z0-9_]+$/,
+                            message: '密码只能包含大写、小写、数字和下划线'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+
+    //从input获取传入后台查询
+    $("#login_btn").click(function(){
+        var username =$("#login_username").val()
+        var password =$("#login_password").val()
+        $.ajax({
+            type: "POST",
+            url:"/LoginController/Login",
+            async:false,
+            dataType:"json",
+            data:{
+                "username": username,
+                "password": password,
+            },
+            success: function(msg){
+                if (msg == 1){
+                    window.location.href = "index.html";
+                }else if (msg == 0) {
+                    window.location.href = "index.html";
+                }else {
+                    alert("用户信息错误")
+                }
+            }
+        });
+    });
+
+
+
 </script>
 </body>
 </html>

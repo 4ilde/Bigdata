@@ -1,10 +1,7 @@
 package com.flight.ticketsAnalysis.dao;
 
 
-import com.flight.ticketsAnalysis.entity.AirlineCityEntity;
-import com.flight.ticketsAnalysis.entity.CityRankEntity;
-import com.flight.ticketsAnalysis.entity.FlightRankEntity;
-import com.flight.ticketsAnalysis.entity.ThroughputDayEntity;
+import com.flight.ticketsAnalysis.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -12,6 +9,10 @@ import java.util.List;
 
 @Mapper
 public interface CityMapper {
+
+    //查询城市的吞吐量
+    @Select("select city_name,throughput_ave from throughput_ave")
+    public List<ThroughputAveEntity> selectCityAverageThroughput();
 
     //查询城市的热门排行
     @Select("select cr_id,city_name,flight_number from city_rank")
@@ -28,4 +29,6 @@ public interface CityMapper {
     //查询城市的吞吐量
     @Select("select city_name,day,throughput_day from throughput_day where city_name= #{city_name}")
     public List<ThroughputDayEntity> selectCityThroughput(String city_name);
+
+
 }
