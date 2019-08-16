@@ -24,10 +24,28 @@
 			<div class="navbar-header pull-left">
 				<a href="index.html" class="navbar-brand">
 					<small>
-						<i class="fa fa-leaf"></i>
+						<i class="fa fa-plane"></i>
 						机票大数据分析平台
 					</small>
 				</a>
+			</div>
+
+			<div class="navbar-header pull-left" style="margin-left: 180px">
+				<small class="navbar-text" >
+					总数据量: 252104
+				</small>
+				<small class="navbar-text" >
+					机场数量: 169
+				</small>
+				<small class="navbar-text" >
+					城市数量: 165
+				</small>
+				<small class="navbar-text" >
+					公司数量: 40
+				</small>
+				<small class="navbar-text" >
+					航线数量: 16498
+				</small>
 			</div>
 
 			<div class="navbar-buttons navbar-header pull-right" role="navigation">
@@ -282,7 +300,9 @@
 								<i class="ace-icon fa fa-home home-icon"></i>
 							</li>
 							<li class="active">主页</li>
-						</ul><!-- /.breadcrumb -->
+						</ul>
+
+							<!-- /.breadcrumb -->
 
 					</div>
 
@@ -599,21 +619,21 @@ $.ajax({
             }
             var color = api.visual('color');
 
-            return {
-                type: 'polygon',
-                shape: {
-                    points: echarts.graphic.clipPointsByRect(points, {
-                        x: params.coordSys.x,
-                        y: params.coordSys.y,
-                        width: params.coordSys.width,
-                        height: params.coordSys.height
-                    })
-                },
-                style: api.style({
-                    fill: color,
-                    stroke: echarts.color.lift(color)
-                })
-            };
+            // return {
+            //     type: 'polygon',
+            //     shape: {
+            //         points: echarts.graphic.clipPointsByRect(points, {
+            //             x: params.coordSys.x,
+            //             y: params.coordSys.y,
+            //             width: params.coordSys.width,
+            //             height: params.coordSys.height
+            //         })
+            //     },
+            //     style: api.style({
+            //         fill: color,
+            //         stroke: echarts.color.lift(color)
+            //     })
+            // };
         }
 
         option = {
@@ -779,7 +799,7 @@ $.ajax({
                     coordinateSystem: 'bmap',
                     data: convertData(data),
                     symbolSize: function (val) {
-                        return 10 ;
+                        return 12 ;
                     },
                     label: {
                         normal: {
@@ -805,7 +825,7 @@ $.ajax({
                         return b.value - a.value;
                     }).slice(0, 10)),
                     symbolSize: function (val) {
-                        return 15 ;
+                        return 18 ;
                     },
                     showEffectOn: 'emphasis',
                     rippleEffect: {

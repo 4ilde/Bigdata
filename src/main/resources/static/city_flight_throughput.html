@@ -27,7 +27,7 @@
         <div class="navbar-header pull-left">
             <a href="index.html" class="navbar-brand">
                 <small>
-                    <i class="fa fa-leaf"></i>
+                    <i class="fa fa-plane"></i>
                     机票大数据分析平台
                 </small>
             </a>
@@ -284,15 +284,16 @@
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
                     </li>
-                    <li class="active">主页</li>
+                    <li>城市模块</li>
+                    <li>日吞吐量</li>
                 </ul><!-- /.breadcrumb -->
 
             </div>
 
             <div class="page-content">
                 <form name = "city_name_form" id = "city_name_form" >
-                    <input name = "city_name" id = "city_name" type="text" >
-                    <submit id="sure_btn">查询</submit>
+                    <input name = "city_name" id = "city_name" type="text" placeholder="城市名称：默认北京">
+                    <input type="button" class="btn-primary" style="width: 60px; height: 34px"  id="sure_btn" value="查询">
                 </form>
                 <div id="container" style="min-width: 510px; height: 600px; max-width: 800px; margin: 0 auto"></div>
 
@@ -354,8 +355,92 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    var chart
+    var chart;
     var dataI = [];
+    var throughputTime = [];
+    chart = new Highcharts.chart('container', {
+        chart: {
+            type: 'spline'
+        },
+        title: {
+            text: '城市日吞吐量'
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '吞吐量 (架)'
+            }
+        },
+        plotOptions: {
+            spline: {
+                marker: {
+                    radius: 4,
+                    lineColor: '#dad617',
+                    lineWidth: 1
+                }
+            }
+        },
+        series: [{
+            name: '日吞吐量',
+            marker: {
+                symbol: 'diamond'
+            },
+            data: dataI
+        }]
+    });
+
+    //默认值
+    $(function(){
+        $.ajax({
+            type: "POST",
+            url:"/CityController/cityDailyThroughput",
+            dataType:"json",
+            data:{
+                "city_name": "北京",
+            },
+            success: function(msg){
+                var data = [];
+                for (i=0;i<msg.length;i++){
+                    var newData = {throughputTime: ' ',y: 11.84};
+                    newData.throughputTime = msg[i].day;
+                    newData.y = msg[i].throughput_day;
+                    data.push(newData);
+                    throughputTime.push(newData.throughputTime);
+                }
+                chart.xAxis[0].setCategories(throughputTime);
+                // Radialize the colors
+                chart.series[0].setData(data)
+            }
+        });
+    });
+
+    //从input获取传入后台查询
+    $("#sure_btn").click(function(){
+        var city_name =$("#city_name").val()
+        $.ajax({
+            type: "POST",
+            url:"/CityController/cityDailyThroughput",
+            dataType:"json",
+            data:{
+                "city_name": city_name,
+            },
+            success: function(msg){
+                var data = [];
+                var throughputTime = [];
+                for (i=0;i<msg.length;i++){
+                    var newData = {throughputTime: ' ',y: 11.84};
+                    newData.throughputTime = msg[i].day;
+                    newData.y = msg[i].throughput_day;
+                    data.push(newData);
+                    throughputTime.push(newData.throughputTime);
+                }
+                chart.xAxis[0].setCategories(throughputTime);
+                // Radialize the colors
+                chart.series[0].setData(data)
+
+            }
+        });
+    });
 
 </script>
 </body>

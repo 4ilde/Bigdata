@@ -12,13 +12,12 @@ import java.util.List;
 @Mapper
 public interface AirlineMapper {
 
-    //查询航空公司在各个城市的业务占比
-    @Select("select * from airline_flight where departure_name = #{departure_name} and landing_name = #{landing_name}")
+    //查询航空公司在各个航线的业务占比
+    @Select("select * from airline_flight_marketshare where departure_name = #{departure_name} and landing_name = #{landing_name}")
     public List<AirlineFlightEntity> selectCompanyRateInAirline(@Param("departure_name") String departure_name, @Param("landing_name") String landing_name);
 
-
     //查询航空公司在各个航线的准点率
-    @Select("select * from airline_flight where departure_name = #{departure_name} and landing_name = #{landing_name}")
+    @Select("select * from airline_flight_puncutality where departure_name = #{departure_name} and landing_name = #{landing_name}")
     public List<AirlineFlightEntity> selectCompanyPunctualityInAirline(@Param("departure_name") String departure_name, @Param("landing_name") String landing_name);
 
     //查询各个航线的最低票价

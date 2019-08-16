@@ -12,7 +12,7 @@ import java.util.List;
 public interface AirCompanyMapper {
 
     //查询航空公司负责的航线
-    @Select("select * from airline_flight where airline_name = #{company_name}")
+    @Select("select * from airline_flight_marketshare where airline_name = #{company_name}")
     public List<AirlineFlightEntity> selectCompanyAirline(String company_name);
 
     //查询航空公司在各个城市的业务占比
@@ -20,6 +20,6 @@ public interface AirCompanyMapper {
     public List<AirlineCityEntity> selectCompanyRateInCity(String company_name);
 
     //查询所有航空公司准点率和航班数
-    @Select("select * from airline")
+    @Select("SELECT * from airline_marketshare,airline_punctuality WHERE airline_marketshare.airline_name = airline_punctuality.airline_name;")
     public List<AirlineEntity> selectAircompany();
 }

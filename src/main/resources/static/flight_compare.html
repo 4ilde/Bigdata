@@ -27,7 +27,7 @@
         <div class="navbar-header pull-left">
             <a href="index.html" class="navbar-brand">
                 <small>
-                    <i class="fa fa-leaf"></i>
+                    <i class="fa fa-plane"></i>
                     机票大数据分析平台
                 </small>
             </a>
@@ -284,7 +284,8 @@
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
                     </li>
-                    <li class="active">主页</li>
+                    <li>航班模块</li>
+                    <li>航班数与准点率</li>
                 </ul><!-- /.breadcrumb -->
 
             </div>
@@ -363,7 +364,7 @@
             for (i = 0; i < msg.length; i++) {
                 var newData = {name: ' ', flightNum: ' ', punctuality: ' '};
                 newData.name = msg[i].airline_name;
-                newData.flightNum = parseInt(msg[i].flight_number);
+                newData.flightNum = parseInt(msg[i].marketshare);
                 newData.punctuality = parseFloat(msg[i].punctuality_ave);
                 AirCompany.push(newData.name);
                 FlightNum.push(newData.flightNum);
@@ -402,8 +403,8 @@
                     }
                 }, { // Secondary yAxis
                     min:0,
-                    max: 3000,
-                    tickAmount: 6,
+                    max: 70000,
+                    tickAmount: 11,
                     title: {
                         text: '航班数',
                         style: {

@@ -28,9 +28,9 @@ public class CityController {
     }
 
     //城市的日吞吐量
-    @RequestMapping("cityThroughput")
+    @RequestMapping("cityDailyThroughput")
     @ResponseBody
-    public Object queryCityThroughput(@RequestBody String city_name){
+    public Object queryCityThroughput(@RequestParam(value="city_name") String city_name){
         List<ThroughputDayEntity> list = cityService.queryCityDayThroughput(city_name);
         return list;
     }

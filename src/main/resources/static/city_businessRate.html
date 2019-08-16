@@ -6,6 +6,7 @@
     <title>城市业务占比</title>
     <script src="framework/head/head.js"></script>
     <script src="framework/Highcharts/code/highcharts.js"></script>
+    <script src="framework/Highcharts/code/highcharts-3d.js"></script>
     <script src="framework/Highcharts/code/modules/exporting.js"></script>
     <script src="framework/Highcharts/code/modules/export-data.js"></script>
 
@@ -27,7 +28,7 @@
         <div class="navbar-header pull-left">
             <a href="index.html" class="navbar-brand">
                 <small>
-                    <i class="fa fa-leaf"></i>
+                    <i class="fa fa-plane"></i>
                     机票大数据分析平台
                 </small>
             </a>
@@ -284,15 +285,16 @@
                     <li>
                         <i class="ace-icon fa fa-home home-icon"></i>
                     </li>
-                    <li class="active">主页</li>
+                    <li>城市模块</li>
+                    <li>业务占比</li>
                 </ul><!-- /.breadcrumb -->
 
             </div>
 
             <div class="page-content">
                 <form name = "city_name_form" id = "city_name_form" >
-                    <input name = "city_name" id = "city_name" type="text" placeholder="请输入城市名称：默认北京">
-                    <submit id="sure_btn">查询</submit>
+                    <input name = "city_name" id = "city_name" type="text" placeholder="城市名称：默认北京">
+                    <input type="button" class="btn-primary" style="width: 60px; height: 34px"  id="sure_btn" value="查询">
                 </form>
                 <div id="container" style="min-width: 510px; height: 600px; max-width: 800px; margin: 0 auto"></div>
 
@@ -356,32 +358,19 @@
 <script type="text/javascript">
     var chart
     var dataI = [];
-    //chart setting
-    Highcharts.setOptions({
-        colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
-            return {
-                radialGradient: {
-                    cx: 0.5,
-                    cy: 0.3,
-                    r: 0.7
-                },
-                stops: [
-                    [0, color],
-                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-                ]
-            };
-        })
-    });
+
     // Build the chart
-    chart = new Highcharts.chart('container', {
+    chart = Highcharts.chart('container', {
         chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
+            type: 'pie',
+            options3d: {
+                enabled: true,
+                alpha: 45,
+                beta: 0
+            }
         },
         title: {
-            text: '城市的航空公司业务占比'
+            text: '城市的航空公司市场业务量占比'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -390,18 +379,16 @@
             pie: {
                 allowPointSelect: true,
                 cursor: 'pointer',
+                depth: 35,
                 dataLabels: {
                     enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    },
-                    connectorColor: 'silver'
+                    format: '{point.name}'
                 }
             }
         },
         series: [{
-            name: 'Share',
+            type: 'pie',
+            name: '业务占比',
             data: dataI
         }]
     });

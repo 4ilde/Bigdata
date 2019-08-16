@@ -21,7 +21,7 @@ public class CityServiceImpl implements CityService {
         return cityMapper.selectCityAverageThroughput();
     }
 
-    //查询城市吞吐量
+    //查询城市日吞吐量
     @Override
     public List<ThroughputDayEntity> queryCityDayThroughput(String city_name)
     {
