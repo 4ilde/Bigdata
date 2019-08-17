@@ -277,84 +277,56 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
-    jQuery(function($) {
-        $(document).on('click', '.toolbar a[data-target]', function(e) {
-            e.preventDefault();
-            var target = $(this).data('target');
-            $('.widget-box.visible').removeClass('visible');//hide others
-            $(target).addClass('visible');//show target
-        });
-    });
 
-    //you don't need this, just used for changing background
-    jQuery(function($) {
-        $('#btn-login-dark').on('click', function(e) {
-            $('body').attr('class', 'login-layout');
-            $('#id-text2').attr('class', 'white');
-            $('#id-company-text').attr('class', 'blue');
+    //    用户名
+    function usernameCheck(){
+        var username=document.getElementById("username");
+        // var reN =/^\d{6,18}$/;
+        var re = /^[a-zA-Z_]{6,18}$/;
+        if(username.value==""){
+            document.getElementById('').innerText="请输入用户名";
+        }
+        else if(username.value.length < 6 ||username.value.length > 18){
+            console.log(username.value);
+            document.getElementById('YHMerror').innerText="格式错误,长度应为6-18个字符";
+        }
+        else if(!re.test(username.value)){
 
-            e.preventDefault();
-        });
-        $('#btn-login-light').on('click', function(e) {
-            $('body').attr('class', 'login-layout light-login');
-            $('#id-text2').attr('class', 'grey');
-            $('#id-company-text').attr('class', 'blue');
-
-            e.preventDefault();
-        });
-        $('#btn-login-blur').on('click', function(e) {
-            $('body').attr('class', 'login-layout blur-login');
-            $('#id-text2').attr('class', 'white');
-            $('#id-company-text').attr('class', 'light-blue');
-
-            e.preventDefault();
-        });
-
-    });
-
-
-
-    document.getElementById('login_btn').onclick= function () {
-        $('#loginForm').bootstrapValidator({
-            message: 'This value is not valid',
-            fields: {
-                username: {
-                    message: '用户名验证失败',
-                    validators: {
-                        notEmpty: {
-                            message: '用户名不能为空！'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 20,
-                            message: '用户名长度必须在6到20位之间'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '用户名只能包含大写、小写、数字和下划线'
-                        }
-                    }
-                },
-                password: {
-                    message: '密码验证失败',
-                    validators:{
-                        notEmpty: {
-                            message: '用户名不能为空！'
-                        },
-                        stringLength: {
-                            min: 6,
-                            max: 20,
-                            message: '密码长度必须在6到16位之间'
-                        },
-                        regexp: {
-                            regexp: /^[a-zA-Z0-9_]+$/,
-                            message: '密码只能包含大写、小写、数字和下划线'
-                        }
-                    }
-                }
-            }
-        });
+            document.getElementById('YHMerror').innerText="格式错误,只能包含英文字母和下划线";
+        }
+        else {
+            document.getElementById('YHMerror').innerText ="";
+        }
     }
+    function passwordCheck(){
+        document.getElementById('YHMerror').innerText ="";
+    }
+    //   密码
+    function MMonblus(){
+        var password=document.getElementById("password");
+        var re = /^(?=.*\d)(?=.*[a-zA-Z])[\da-zA-Z]{6,}$/;
+        // var reg=/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/;
+
+        if(password.value==""){
+            document.getElementById('MMerror').innerText="请输入密码";
+        }
+        else if(password.value.length < 6){
+            document.getElementById('MMerror').innerText="格式错误,,密码长度至少为6位";
+        }
+
+        else if(!re.test(password.value)){
+            document.getElementById('MMerror').innerText="格式错误,必须包含英文字母大小写和数字";
+        }
+        else {
+            document.getElementById('MMerror').innerText ="";
+        }
+    }
+    function MMonfocu(){
+        document.getElementById('MMerror').innerText ="";
+    }
+
+
+</script>
 
 
 
@@ -385,6 +357,5 @@
 
 
 
-</script>
 </body>
 </html>
