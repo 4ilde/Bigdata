@@ -79,9 +79,9 @@
 							<li class="divider"></li>
 
 							<li>
-								<a href="#">
+								<a id="logout">
 									<i class="ace-icon fa fa-power-off"></i>
-									Logout
+									退出
 								</a>
 							</li>
 						</ul>
@@ -383,13 +383,32 @@
 				type: "POST",
                 url: "/LoginController/getSession",
                 success: function (msg) {
-					document.getElementById('uName').innerHTML = msg[0];
+                    var flag = document.getElementById('uName')
+                    flag.innerHTML = msg[0];
+                    if (flag.innerHTML == ''){
+                        location.href="login.html";
+                    }
 					if (msg[1] != "admin"){
 					    document.getElementById('manage').innerHTML = '';
 					}
 				}
             })
-		}
+		};
+
+		$('#logout').click(function () {
+			$.ajax({
+                type: "POST",
+                url:"/LoginController/deleteSession",
+				success: function (msg) {
+                    if (msg == true) {
+                        alert("3秒之后将跳回登录页面!")
+                        setTimeout("window.location.href='login.html'", 3000)
+                    }else
+					    alert("退出失败")
+                }
+			})
+        });
+
 
 $.ajax({
     type: "POST",
@@ -869,7 +888,6 @@ $.ajax({
     }
 })
 		</script>
-		</body>
-		</html>
-	</body>
+</body>
 </html>
+

@@ -53,6 +53,13 @@ public class LoginController {
         return list;
     }
 
+    @RequestMapping("/deleteSession")
+    @ResponseBody
+    public boolean deleteSession(HttpServletRequest request){
+        request.getSession().invalidate();
+        return true;
+    }
+
     //注册模块
     @RequestMapping("Register")
     @ResponseBody
