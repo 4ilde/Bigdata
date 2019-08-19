@@ -5,7 +5,6 @@ import com.flight.ticketsAnalysis.dao.LoginMapper;
 import com.flight.ticketsAnalysis.entity.AdminEntity;
 import com.flight.ticketsAnalysis.entity.UserEntity;
 import com.flight.ticketsAnalysis.service.LoginService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,15 +17,22 @@ public class LoginServiceImpl implements LoginService{
     private LoginMapper loginMapper;
 
     @Override
-    public List<AdminEntity> queryAdminAccount(String username, String password) {
+    public AdminEntity queryAdminAccount(String username, String password) {
         return loginMapper.selectAdminAccount(username, password);
     }
 
     @Override
-    public List<UserEntity> queryUserAccount(String username, String password) {
+    public UserEntity queryUserAccount(String username, String password) {
         return loginMapper.selectUserAccount(username, password);
     }
 
+    @Override
+    public boolean InsertUserAccount(String email, String username, String password){
+        return loginMapper.insertUser(email, username, password);
+    }
 
-
+    @Override
+    public List<UserEntity> queryUser(String username){
+        return loginMapper.selectUser(username);
+    }
 }

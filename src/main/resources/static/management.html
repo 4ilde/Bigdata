@@ -99,9 +99,9 @@
                         <li class="divider"></li>
 
                         <li>
-                            <a href="#">
+                            <a id="logout">
                                 <i class="ace-icon fa fa-power-off"></i>
-                                Logout
+                                退出
                             </a>
                         </li>
                     </ul>
@@ -293,7 +293,7 @@
                 </ul>
             </li>
             <!--管理模块	-->
-            <li class="">
+            <li id="manage" class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> 管理模块 </span>
@@ -414,6 +414,41 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
+    window.onload = function(){
+        $.ajax({
+            type: "POST",
+            url: "/LoginController/getSession",
+            success: function (msg) {
+                if (msg[1] != "admin"){
+                    document.getElementById('manage').innerHTML = '';
+                }
+                var flag = document.getElementById('uName')
+                flag.innerHTML = msg[0];
+                if (flag.innerHTML == ''){
+                    location.href="login.html";
+                }
+
+            }
+        })
+    };
+
+    $('#logout').click(function () {
+        $.ajax({
+            type: "POST",
+            url:"/LoginController/deleteSession",
+            success: function (msg) {
+                if (msg == true) {
+                    alert("3秒之后将跳回登录页面!")
+                    setTimeout("window.location.href='login.html'", 3000)
+                }else
+                    alert("退出失败")
+            }
+        })
+    });
+
+
+
     // $.ajax({
     //     type: "POST",
     //     url: "/AirCompanyController/airFlightAndPunctuality",
