@@ -17,10 +17,13 @@ public interface ManageMapper {
     public List<UserEntity> selectUserEntityAccount(@Param("username") String username);
 
     //根据用户名修改用户密码
-    @Update("update user set password = #{password}where uesrname = #{username}")
-    public List<UserEntity> changeUserPassword(@Param("username") String username,@Param("password") String password);
+    @Update("update user set password = #{password},email = #{email} where username = #{username}")
+    public int changeUserPassword(@Param("username") String username,@Param("password") String password,@Param("email") String email);
 
     //根据用户名删除用户
-    @Delete("delete from user where uesrname = #{username}")
-    public List<UserEntity> deleteUser(@Param("username") String username);
+    @Delete("delete from user where username = #{username}")
+    public int deleteUser(@Param("username") String username);
+    //添加
+    @Insert("insert into user(username,password,email) values(#{username},#{password},#{email})")
+    public int addUser(@Param("username") String username, @Param("password") String password, @Param("email") String email);
 }

@@ -377,6 +377,24 @@
 		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
 		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
 		<script type="text/javascript">
+			var grid_data=[];
+			$.ajax({
+				type: "POST",
+				url:"/ManageController/queryUser",
+				dataType:"json",
+				success: function(msg){
+					for (i=0;i<msg.length;i++){
+						var newData = {user_id: ' ',username: ' ',password:' ',email:' '};
+						newData.user_id = msg[i].user_id;
+						newData.username = msg[i].username;
+						newData.password = msg[i].password;
+						newData.email = msg[i].email;
+						grid_data.push(newData)
+					}
+				}
+			});
+			console.log(grid_data);
+
 
 $.ajax({
     type: "POST",
