@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<meta charset="utf-8" />
@@ -54,8 +54,8 @@
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
 							<img class="nav-user-photo" src="images/avatars/user.jpg" alt="Jason's Photo" />
 							<span class="user-info">
-									<small>Welcome,</small>
-									Jason
+									<small>欢迎回来！</small>
+									<span id="uName"></span>
 								</span>
 
 							<i class="ace-icon fa fa-caret-down"></i>
@@ -263,7 +263,7 @@
 						</ul>
 					</li>
 			<!--管理模块	-->
-					<li class="">
+					<li id="manage" class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> 管理模块 </span>
@@ -376,7 +376,20 @@
 		<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=G3B0vMAyGTZvDopi9PbiKnfl1KaOhalm&__ec_v__=20190126"></script>
 		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
 		<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+		
 		<script type="text/javascript">
+		window.onload = function(){
+		    $.ajax({
+				type: "POST",
+                url: "/LoginController/getSession",
+                success: function (msg) {
+					document.getElementById('uName').innerHTML = msg[0];
+					if (msg[1] != "admin"){
+					    document.getElementById('manage').innerHTML = '';
+					}
+				}
+            })
+		}
 
 $.ajax({
     type: "POST",
@@ -619,21 +632,6 @@ $.ajax({
             }
             var color = api.visual('color');
 
-            // return {
-            //     type: 'polygon',
-            //     shape: {
-            //         points: echarts.graphic.clipPointsByRect(points, {
-            //             x: params.coordSys.x,
-            //             y: params.coordSys.y,
-            //             width: params.coordSys.width,
-            //             height: params.coordSys.height
-            //         })
-            //     },
-            //     style: api.style({
-            //         fill: color,
-            //         stroke: echarts.color.lift(color)
-            //     })
-            // };
         }
 
         option = {

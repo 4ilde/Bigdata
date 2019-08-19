@@ -40,7 +40,7 @@
                         <img class="nav-user-photo" src="images/avatars/user.jpg" alt="Jason's Photo" />
                         <span class="user-info">
 									<small>Welcome,</small>
-									Jason
+									<span id="uName"></span>
 								</span>
 
                         <i class="ace-icon fa fa-caret-down"></i>
@@ -248,7 +248,7 @@
                 </ul>
             </li>
             <!--管理模块	-->
-            <li class="">
+            <li id="manage" class="">
                 <a href="#" class="dropdown-toggle">
                     <i class="menu-icon fa fa-list"></i>
                     <span class="menu-text"> 管理模块 </span>
@@ -352,6 +352,20 @@
 
 <!-- inline scripts related to this page -->
 <script type="text/javascript">
+
+    window.onload = function(){
+        $.ajax({
+            type: "POST",
+            url: "/LoginController/getSession",
+            success: function (msg) {
+                document.getElementById('uName').innerHTML = msg[0];
+                if (msg[1] != "admin"){
+                    document.getElementById('manage').innerHTML = '';
+                }
+            }
+        })
+    }
+
     $(function(){
         $.ajax({
             type: "POST",
