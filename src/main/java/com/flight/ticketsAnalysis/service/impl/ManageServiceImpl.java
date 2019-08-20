@@ -18,5 +18,16 @@ public class ManageServiceImpl implements ManageService {
     public List<UserEntity> queryUser(){
         return manageMapper.showUserEntityAccount();
     }
+    @Override
+    public int deleteUser(String username){
+        return manageMapper.deleteUser(username);
+    }
 
+    public int changeUser(String username,String password,String email){
+        return manageMapper.changeUserPassword(username,password,email);
+    }
+    @Override
+    public int addUser(String username, String password, String email){
+       return manageMapper.addUser(username,password,email);
+    }
 }

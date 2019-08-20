@@ -467,7 +467,7 @@
     //         }
     //     }
     // })
-    var grid_data =
+    var grid_data=[];
         // [
         //     {id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
         //     {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
@@ -493,13 +493,28 @@
         //     {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
         //     {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
         // ];
-    [
+        /*[
         {user_id:"1",username:"Desktop Computer1",email:"note1@dsa.com",password:"123456"},
         {user_id:"2",username:"Desktop Computer2",email:"note2@dsa.com",password:"123456"},
         {user_id:"3",username:"Desktop Computer3",email:"note3@dsa.com",password:"123456"},
         {user_id:"4",username:"Desktop Computer4",email:"note4@dsa.com",password:"123456"},
-        ]
-
+        ]*/
+        $.ajax({
+            type: "POST",
+            url:"/ManageController/queryUser",
+            dataType:"json",
+            success: function(msg){
+                for (i=0;i<msg.length;i++){
+                    var newData = {user_id: ' ',username: ' ',password:' ',email:' '};
+                    newData.user_id = msg[i].user_id;
+                    newData.username = msg[i].username;
+                    newData.password = msg[i].password;
+                    newData.email = msg[i].email;
+                    grid_data.push(newData)
+                }
+            }
+        });
+        console.log(grid_data);
 
 
     jQuery(function($) {
@@ -679,17 +694,103 @@
                 refreshicon : 'ace-icon fa fa-refresh green',
                 view: true,
                 viewicon : 'ace-icon fa fa-search-plus grey',
-                // addfunc:function () {
-                //
-                // },
-                // editfunc:function () {
-                //     var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-                //     if( gr != null ) jQuery(grid_selector).jqGrid('editGridRow',gr,{height:280,reloadAfterSubmit:false});
-                //     else alert("Please Select Row");
-                // },
-                // delfunc:function () {
-                //
-                // }
+
+                /*addfunc:function () {
+                    var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+                    if( gr != null )
+                    {
+                        //调用edit 这个函数和add delete不一样
+                        jQuery(grid_selector).jqGrid('editGridRow', "new", { height: 300, reloadAfterSubmit: false });
+                        console.log(jQuery(grid_selector).jqGrid("getRowData",gr))
+                        //当submit点击时
+                        $("#sData").click(function () {
+                            console.log("clicked")
+                            //console.log($("#username").val())
+                            //获取input框的值
+                            var username = $("#username").val();
+                            var password = $("#password").val();
+                            var email = $("#email").val();
+
+                            $.ajax({
+                                type: "POST",
+                                url:"/ManageController/addUser",
+                                dataType:"json",
+                                data:{
+                                    "username": username,
+                                    "password":password,
+                                    "email":email,
+                                },
+                                success: function(msg){
+                                    //update delete insert
+                                    //成功 1 失败 0/-1
+                                    console.log(msg);
+                                    alert("添加成功");
+                                }
+                            });
+                            console.log(grid_data);
+
+                        })
+                    }
+                    //else alert("Please Select Row");
+
+
+                },*/
+
+                editfunc:function () {
+                    //var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+                     //if( gr != null ) jQuery(grid_selector).jqGrid('editGridRow',gr,{height:280,reloadAfterSubmit:false});
+                     //else alert("Please Select Row");
+                    //获取当前行的id
+                    var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+                    if( gr != null )
+                    {
+                        //调用edit 这个函数和add delete不一样
+                        jQuery(grid_selector).jqGrid('editGridRow',gr,{height:280,reloadAfterSubmit:false});
+
+                        console.log(jQuery(grid_selector).jqGrid("getRowData",gr))
+                        //当submit点击时
+                        $("#sData").click(function () {
+                            console.log("clicked")
+                            console.log($("#username").val())
+                            //获取input框的值
+                            var username = $("#username").val();
+                            var password = $("#password").val();
+                            var email = $("#email").val();
+
+                            $.ajax({
+                                type: "POST",
+                                url:"/ManageController/changeUser",
+                                dataType:"json",
+                                data:{
+                                    "username": username,
+                                    "password":password,
+                                    "email":email,
+                                },
+                                success: function(msg){
+                                    //update delete insert
+                                    //成功 1 失败 0/-1
+                                   console.log(msg);
+                                   alert("修改成功");
+                                }
+                            });
+                            console.log(grid_data);
+
+                        })
+                    }
+                    else alert("Please Select Row");
+
+                   // jQuery("#grid_id").editGridRow( rowid, properties );
+
+                    //jQuery("#grid_id").jqGrid('editGridRow', rowid, properties );
+                 },
+
+                 //delfunc:function () {
+
+                     // jQuery("#grid_id").editGridRow( rowid, properties );
+
+                     //jQuery("#grid_id").jqGrid('editGridRow', rowid, properties );
+
+                 //}
             },
 
             {
@@ -715,6 +816,26 @@
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar')
                         .wrapInner('<div class="widget-header" />')
                     style_edit_form(form);
+                    $("#sData").click(function (){
+
+                        var username = $("#username").val()
+                        var password = $("#password").val()
+                        var email = $("#email").val()
+                        $.ajax({
+                            type: "POST",
+                            url:"/ManageController/addUser",
+                            dataType:"json",
+                            data:{
+                                "username": username,
+                                "password": password,
+                                "email": email
+                            },
+                            success: function(){
+                                alert("添加成功");
+                            }
+                        })
+
+                    })
                 }
             },
             {
@@ -726,6 +847,30 @@
 
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-titlebar').wrapInner('<div class="widget-header" />')
                     style_delete_form(form);
+                    var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
+                    var rowData=jQuery(grid_selector).jqGrid("getRowData",gr);
+                    var username = rowData.username;
+                    console.log(username);
+                    $("#dData").click(function (){
+                        //var username = $("#username").val()
+                        //var password = $("#password").val()
+                        //var email = $("#email").val()
+                        console.log(username);
+                        $.ajax({
+                            type: "POST",
+                            url:"/ManageController/deleteUser",
+                            dataType:"json",
+                            data:{
+                                "username": username,
+                                //"password": password,
+                                //"email": email
+                            },
+                            success: function(){
+                                alert("删除成功");
+                            }
+                        })
+
+                    })
 
                     form.data('styled', true);
                 },
@@ -759,7 +904,7 @@
                     var form = $(e[0]);
                     form.closest('.ui-jqdialog').find('.ui-jqdialog-title').wrap('<div class="widget-header" />')
                 }
-            },
+            }
 
         )
 
