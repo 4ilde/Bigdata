@@ -421,7 +421,8 @@
             url: "/LoginController/getSession",
             success: function (msg) {
                 if (msg[1] != "admin"){
-                    document.getElementById('manage').innerHTML = '';
+                    // alert("您没有权限访问该页面！")
+                    window.location.href='index.html';
                 }
                 var flag = document.getElementById('uName')
                 flag.innerHTML = msg[0];
