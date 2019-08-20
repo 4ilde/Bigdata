@@ -472,6 +472,7 @@
                     data.push(newData)
                     company_name.push(newData.companyName);
                 }
+                chart.xAxis[0].setCategories(company_name);
                 // Radialize the colors
                 chart.series[0].setData(data)
 
