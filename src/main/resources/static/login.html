@@ -299,10 +299,19 @@
 
     });
 
+
+
     //用户登录
     $("#login_btn").click(function(){
         var username =$("#login_username").val()
         var password =$("#login_password").val()
+        if (username.length > 16 || username.length < 6){
+            alert("用户名必须在6~16位之间!")
+            return;
+        } else if (password.length < 6 || password.length > 16){
+            alert("密码长度必须在6~16位之间!")
+            return;
+        }
         $.ajax({
             type: "POST",
             url:"/LoginController/Login",
@@ -324,6 +333,8 @@
         });
     });
 
+
+
     //用户注册
     $("#register_btn").click(function(){
         var email =$("#register_email").val();
@@ -331,8 +342,18 @@
         var password =$("#register_password").val();
         var password_sure =$("#register_password_sure").val();
 
-
-        if (password != password_sure) {
+        apos=email.indexOf("@")
+        dotpos=email.lastIndexOf(".")
+        if (apos<1||dotpos-apos<2) {
+            alert("邮箱格式不正确");
+            return;
+        } else if (username.length > 16 || username.length < 6){
+            alert("用户名必须在6~16位之间!")
+            return;
+        } else if (password.length < 6 || password.length > 16){
+            alert("密码长度必须在6~16位之间!")
+            return;
+        }else if (password != password_sure) {
             alert("两次密码输入不一致,请重新输入!");
             return;
         }
