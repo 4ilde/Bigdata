@@ -448,58 +448,7 @@
         })
     });
 
-
-
-    // $.ajax({
-    //     type: "POST",
-    //     url: "/AirCompanyController/airFlightAndPunctuality",
-    //     success: function (msg) {
-    //         var AirCompany = [];
-    //         var FlightNum = [];
-    //         var Punctuality = [];
-    //         for (i = 0; i < msg.length; i++) {
-    //             var newData = {name: ' ', flightNum: ' ', punctuality: ' '};
-    //             newData.name = msg[i].airline_name;
-    //             newData.flightNum = parseInt(msg[i].marketshare);
-    //             newData.punctuality = parseFloat(msg[i].punctuality_ave);
-    //             AirCompany.push(newData.name);
-    //             FlightNum.push(newData.flightNum);
-    //             Punctuality.push(newData.punctuality);
-    //         }
-    //     }
-    // })
     var grid_data=[];
-        // [
-        //     {id:"1",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-        //     {id:"2",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-        //     {id:"3",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-        //     {id:"4",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-        //     {id:"5",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"6",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"7",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-        //     {id:"8",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-        //     {id:"9",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"10",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-        //     {id:"11",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-        //     {id:"12",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-        //     {id:"13",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"},
-        //     {id:"14",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"15",name:"Play Station",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"16",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX",sdate:"2007-12-03"},
-        //     {id:"17",name:"Server",note:"note2",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-        //     {id:"18",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"19",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx",sdate:"2007-12-03"},
-        //     {id:"20",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx", sdate:"2007-12-03"},
-        //     {id:"21",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime",sdate:"2007-12-03"},
-        //     {id:"22",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT",sdate:"2007-12-03"},
-        //     {id:"23",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX",sdate:"2007-12-03"}
-        // ];
-        /*[
-        {user_id:"1",username:"Desktop Computer1",email:"note1@dsa.com",password:"123456"},
-        {user_id:"2",username:"Desktop Computer2",email:"note2@dsa.com",password:"123456"},
-        {user_id:"3",username:"Desktop Computer3",email:"note3@dsa.com",password:"123456"},
-        {user_id:"4",username:"Desktop Computer4",email:"note4@dsa.com",password:"123456"},
-        ]*/
         $.ajax({
             type: "POST",
             url:"/ManageController/queryUser",
@@ -539,49 +488,10 @@
             }
         })
 
-        //if your grid is inside another element, for example a tab pane, you should use its parent's width:
-        /**
-         $(window).on('resize.jqGrid', function () {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				})
-         //and also set width when tab pane becomes visible
-         $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-				  if($(e.target).attr('href') == '#mygrid') {
-					var parent_width = $(grid_selector).closest('.tab-pane').width();
-					$(grid_selector).jqGrid( 'setGridWidth', parent_width );
-				  }
-				})
-         */
 
         jQuery(grid_selector).jqGrid({
-            //direction: "rtl",
 
-            //subgrid options
             subGrid : false,
-            //subGridModel: [{ name : ['No','Item Name','Qty'], width : [55,200,80] }],
-            //datatype: "xml",
-            // subGridOptions : {
-            //     plusicon : "ace-icon fa fa-plus center bigger-110 blue",
-            //     minusicon  : "ace-icon fa fa-minus center bigger-110 blue",
-            //     openicon : "ace-icon fa fa-chevron-right center orange"
-            // },
-            //for this example we are using local data
-            // subGridRowExpanded: function (subgridDivId, rowId) {
-            //     var subgridTableId = subgridDivId + "_t";
-            //     $("#" + subgridDivId).html("<table id='" + subgridTableId + "'></table>");
-            //     $("#" + subgridTableId).jqGrid({
-            //         datatype: 'local',
-            //         data: subgrid_data,
-            //         colNames: ['No','Item Name','Qty'],
-            //         colModel: [
-            //             { name: 'id', width: 50 },
-            //             { name: 'name', width: 150 },
-            //             { name: 'qty', width: 50 }
-            //         ]
-            //     });
-            // },
-
 
            // url: '/ManageController/queryUser',
             //datatype:"json",
@@ -604,11 +514,6 @@
                 {name:'username',index:'name', width:60, sorttype:"int", editable: true},
                 {name:'email',index:'email', width:60, sorttype:"int", editable: true},
                 {name:'password',index:'password', width:60, sorttype:"int", editable: true},
-                // {name:'sdate',index:'sdate',width:90, editable:true, sorttype:"date",unformat: pickDate},
-                // {name:'name',index:'name', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                // {name:'stock',index:'stock', width:70, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"},unformat: aceSwitch},
-                // {name:'ship',index:'ship', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-                // {name:'note',index:'note', width:150, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}}
             ],
             oneditfunc:function(){
               console.log("dsadasdas")
@@ -638,29 +543,8 @@
             editurl: "./dummy.php",//nothing is saved
             caption: "用户管理"
 
-            //,autowidth: true,
-
-
-            /**
-             ,
-             grouping:true,
-             groupingView : {
-						 groupField : ['name'],
-						 groupDataSorted : true,
-						 plusicon : 'fa fa-chevron-down bigger-110',
-						 minusicon : 'fa fa-chevron-up bigger-110'
-					},
-             caption: "Grouping"
-             */
-
         });
         $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
-
-
-
-        //enable search/filter toolbar
-        //jQuery(grid_selector).jqGrid('filterToolbar',{defaultSearch:true,stringResult:true})
-        //jQuery(grid_selector).filterToolbar({});
 
 
         //switch element when editing inline
@@ -678,8 +562,6 @@
                     .datepicker({format:'yyyy-mm-dd' , autoclose:true});
             }, 0);
         }
-
-
         //navButtons
         jQuery(grid_selector).jqGrid('navGrid',pager_selector,
             { 	//navbar options
@@ -696,51 +578,8 @@
                 view: true,
                 viewicon : 'ace-icon fa fa-search-plus grey',
 
-                /*addfunc:function () {
-                    var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-                    if( gr != null )
-                    {
-                        //调用edit 这个函数和add delete不一样
-                        jQuery(grid_selector).jqGrid('editGridRow', "new", { height: 300, reloadAfterSubmit: false });
-                        console.log(jQuery(grid_selector).jqGrid("getRowData",gr))
-                        //当submit点击时
-                        $("#sData").click(function () {
-                            console.log("clicked")
-                            //console.log($("#username").val())
-                            //获取input框的值
-                            var username = $("#username").val();
-                            var password = $("#password").val();
-                            var email = $("#email").val();
-
-                            $.ajax({
-                                type: "POST",
-                                url:"/ManageController/addUser",
-                                dataType:"json",
-                                data:{
-                                    "username": username,
-                                    "password":password,
-                                    "email":email,
-                                },
-                                success: function(msg){
-                                    //update delete insert
-                                    //成功 1 失败 0/-1
-                                    console.log(msg);
-                                    alert("添加成功");
-                                }
-                            });
-                            console.log(grid_data);
-
-                        })
-                    }
-                    //else alert("Please Select Row");
-
-
-                },*/
-
                 editfunc:function () {
-                    //var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
-                     //if( gr != null ) jQuery(grid_selector).jqGrid('editGridRow',gr,{height:280,reloadAfterSubmit:false});
-                     //else alert("Please Select Row");
+
                     //获取当前行的id
                     var gr = jQuery(grid_selector).jqGrid('getGridParam','selrow');
                     if( gr != null )
@@ -780,24 +619,14 @@
                     }
                     else alert("Please Select Row");
 
-                   // jQuery("#grid_id").editGridRow( rowid, properties );
 
-                    //jQuery("#grid_id").jqGrid('editGridRow', rowid, properties );
                  },
 
-                 //delfunc:function () {
 
-                     // jQuery("#grid_id").editGridRow( rowid, properties );
-
-                     //jQuery("#grid_id").jqGrid('editGridRow', rowid, properties );
-
-                 //}
             },
 
             {
-                //edit record form
-                //closeAfterEdit: true,
-                //width: 700,
+
                 recreateForm: true,
                 beforeShowForm : function(e) {
                     var form = $(e[0]);
@@ -853,9 +682,7 @@
                     var username = rowData.username;
                     console.log(username);
                     $("#dData").click(function (){
-                        //var username = $("#username").val()
-                        //var password = $("#password").val()
-                        //var email = $("#email").val()
+
                         console.log(username);
                         $.ajax({
                             type: "POST",
@@ -912,12 +739,6 @@
 
 
         function style_edit_form(form) {
-            //enable datepicker on "sdate" field and switches for "stock" field
-           // form.find('input[name=sdate]').datepicker({format:'yyyy-mm-dd' , autoclose:true})
-
-            //form.find('input[name=stock]').addClass('ace ace-switch ace-switch-5').after('<span class="lbl"></span>');
-            //don't wrap inside a label element, the checkbox value won't be submitted (POST'ed)
-            //.addClass('ace ace-switch ace-switch-5').wrap('<label class="inline" />').after('<span class="lbl"></span>');
 
 
             //update buttons classes
@@ -971,40 +792,13 @@
 
 
 
-        //it causes some flicker when reloading or navigating grid
-        //it may be possible to have some custom formatter to do this as the grid is being created to prevent this
-        //or go back to default browser checkbox styles for the grid
+
         function styleCheckbox(table) {
-            /**
-             $(table).find('input:checkbox').addClass('ace')
-             .wrap('<label />')
-             .after('<span class="lbl align-top" />')
 
-
-             $('.ui-jqgrid-labels th[id*="_cb"]:first-child')
-             .find('input.cbox[type=checkbox]').addClass('ace')
-             .wrap('<label />').after('<span class="lbl align-top" />');
-             */
         }
 
-
-        //unlike navButtons icons, action icons in rows seem to be hard-coded
-        //you can change them like this in here if you want
         function updateActionIcons(table) {
-            /**
-             var replacement =
-             {
-						'ui-ace-icon fa fa-pencil' : 'ace-icon fa fa-pencil blue',
-						'ui-ace-icon fa fa-trash-o' : 'ace-icon fa fa-trash-o red',
-						'ui-icon-disk' : 'ace-icon fa fa-check green',
-						'ui-icon-cancel' : 'ace-icon fa fa-times red'
-					};
-             $(table).find('.ui-pg-div span.ui-icon').each(function(){
-						var icon = $(this);
-						var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
-						if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
-					})
-             */
+
         }
 
         //replace icons with FontAwesome icons like above
